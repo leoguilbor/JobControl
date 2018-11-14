@@ -1,2 +1,2 @@
 # JobControl
-Spring based application for demonstration porpoise
+Spring based application for demonstration purpose.
