@@ -1,0 +1,122 @@
+.navbar-toggler.toggler-example {
+    cursor: pointer;
+}
+
+.navbar.navbar-2 .navbar-toggler-icon {
+    background-image: url('https://mdbootstrap.com/img/svg/hamburger2.svg?color=fff');
+}
+body{
+min-height:100%; padding:0; margin:0;  
+}
+
+.background {
+	
+	display:block;
+	
+	background-image: url('img/header_img.jpg') ;
+	background-color: #cccccc;
+	background-position: top center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 100vh;
+		
+}
+
+.error {
+	position: absolute;
+	top: 100px;
+}
+.error li{
+	list-style-type: circle;
+}
+
+.conteudo{
+	position: relative;
+	margin-top:15px;
+	min-height: 800px;
+}
+
+.contacts{
+	font-size:1rem;
+	font-family:cursive;
+	text-align: left;
+	color:#000000;
+	margin-right:15px;	
+	background: rgba(255, 255, 255, 0.5);
+	max-width:-moz-available;
+	position: relative;
+
+}
+
+
+
+.login{
+	background: rgba(255, 255, 255, 0.3);
+	opacity: 0.8;
+	font-size:1.5rem;
+	position: relative;
+	display: block;
+	text-align: center;
+}
+
+
+.header{
+	position: relative;
+	
+	font-family:fantasy; 
+	font-size:4rem;
+	text-align: right;
+	color:#ffffff;	
+	-webkit-text-stroke: 1px grey;
+	min-height:200px;
+	padding-top: 30px;
+	padding-right: 30px;
+
+	display:block;
+
+}
+.menu{
+	
+	left: -15px;
+	max-width:50%;
+	min-width:px;
+	margin-left:10px;
+	font-size:1.0rem;
+	cursor:none;	
+	position: relative;
+	top:0px;	
+}
+
+
+
+.footer{
+	position: absolute;
+
+	
+	font-size:1rem;
+	
+	text-align:center;
+	
+	
+	color:#ffffff;
+	-webkit-text-stroke: 1px grey;
+	display:block;
+	min-height: 50px;
+	min-width:100%;
+	padding-top: 10px;
+	bottom: 0px;	
+
+}
+
+@media (max-width: 600px) {
+    .header{
+	    padding-top:0rem;
+	    min-width:400px;
+	    background-position:center 30%;
+	    font-size: 1.5rem;
+	    min-height:3rem;
+    }
+        .footer{
+	    min-width:400px;
+    }
+}
