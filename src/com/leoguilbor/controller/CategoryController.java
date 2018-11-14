@@ -1,3 +1,21 @@
+/**
+ *     Class responsible for Controlling view interactions from Category domain  
+ *     Copyright (C) 2018 Leandro Lima
+ * 
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ * 
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ * 
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.leoguilbor.controller;
 
 import java.io.IOException;
@@ -18,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.leoguilbor.DAO.ICategoryDAO;
-import com.leoguilbor.business.MenuBusiness;
+import com.leoguilbor.business.AuthorizationBusiness;
 import com.leoguilbor.model.Category;
 
 @Controller
@@ -28,7 +46,7 @@ public class CategoryController {
 	private ICategoryDAO categoryDAO;
 	
 	@Autowired
-	private MenuBusiness menuB;
+	private AuthorizationBusiness authorizationB;
 
 	public void setClientDAO(ICategoryDAO categoryDAO) {
 		this.categoryDAO = categoryDAO;
@@ -37,7 +55,7 @@ public class CategoryController {
 	@RequestMapping(value = {"/listCategories" }, method = RequestMethod.GET)
 	public String listServices(@ModelAttribute("category") Category category, BindingResult br, ModelMap model, HttpServletRequest request) {
 		
-		model.addAttribute("links", menuB.listActions());
+		model.addAttribute("links", authorizationB.listActions());
 
 		return "services/listServices";
 	}

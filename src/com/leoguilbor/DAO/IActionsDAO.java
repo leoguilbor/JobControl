@@ -1,6 +1,6 @@
 /**
- *     This Class is an implementation of IJobDAO. In this example is used decorator design pattern 
- *     permitting a restructure of DAO for a specific model         
+ *     This Class is an interface for ActionsDAO. In this example is used decorator design pattern 
+ *     permitting a restructure of DAO for a specific model.          
  *     Copyright (C) 2018 Leandro Lima
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,8 @@
  */
 package com.leoguilbor.DAO;
 
-import org.springframework.stereotype.Repository;
+import com.leoguilbor.generic.GenericDAO;
 
-import com.leoguilbor.generic.GenericDAOImpl;
-import com.leoguilbor.model.Job;
-
-@Repository
-public class JobDAO extends GenericDAOImpl<Job>{
+public interface IActionsDAO<Actions> extends GenericDAO<Actions>{
 
 }

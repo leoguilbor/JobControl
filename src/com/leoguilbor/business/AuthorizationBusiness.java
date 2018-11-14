@@ -1,6 +1,5 @@
 /**
- *     This Class is an interface for CategoryDAO. In this example is used decorator design pattern 
- *     permitting a restructure of DAO for a specific model.          
+ *     Class responsible for Business rules from Authorization domain  
  *     Copyright (C) 2018 Leandro Lima
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -16,16 +15,34 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.leoguilbor.DAO;
+
+package com.leoguilbor.business;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.leoguilbor.DAO.ActionsDAO;
+import com.leoguilbor.generic.GenericBusinessImpl;
 import com.leoguilbor.generic.GenericDAO;
+import com.leoguilbor.model.Actions;
 
-public interface ICategoryDAO<Category> extends GenericDAO<Category>{
+@Service
+public class AuthorizationBusiness extends GenericBusinessImpl<Actions> {
 
-	public List<Category> listByName(String criteria);
-
+	@Autowired(required=true)
+	private GenericDAO<Actions> actionsDAO;
 	
-}
+	public GenericDAO<Actions> getActionsDAO() {
+		return actionsDAO;
+	}
 
+	public void setActionsDAO(ActionsDAO actionsDAO) {
+		this.actionsDAO = actionsDAO;
+	}
+	
+	public List<Actions> listActions(){
+		return actionsDAO.list();
+	}
+}

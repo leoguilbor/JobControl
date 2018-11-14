@@ -1,3 +1,21 @@
+/**
+ *     This is an generic implementation for DAO allowing decorator design pattern.
+ *     Copyright (C) 2018 Leandro Lima
+ * 
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ * 
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ * 
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.leoguilbor.generic;
 
 import java.io.Serializable;
@@ -16,43 +34,43 @@ import org.springframework.context.annotation.Scope;
 @Transactional
 @Scope("session")
 public class GenericDAOImpl<T> implements GenericDAO<T> {
-    
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-    public SessionFactory getSessionFactory() {
-    	System.out.println(sessionFactory);
+
+	private Class<T> clazz;
+
+	public GenericDAOImpl() {
+		Type t = getClass().getGenericSuperclass();
+		ParameterizedType pt = (ParameterizedType) t;
+		clazz = (Class<T>) pt.getActualTypeArguments()[0];
+	}
+
+	public SessionFactory getSessionFactory() {
+		System.out.println(sessionFactory);
 		return sessionFactory;
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
-	private Class<T> clazz;
-    
-    public GenericDAOImpl() {
-        Type t = getClass().getGenericSuperclass();
-        ParameterizedType pt = (ParameterizedType) t;
-        clazz = (Class<T>) pt.getActualTypeArguments()[0];
+
+	public Session getSession() {
+		Session s = this.getSessionFactory().getCurrentSession();
+
+		return s;
 	}
-
-    public Session getSession() {
-    	Session s = this.getSessionFactory().getCurrentSession(); 
-
-    	return s;
-    }
 
 	@Override
 	public Long save(T t) {
 		// TODO Auto-generated method stub
-		Long generatedId=0L;
+		Long generatedId = 0L;
 		try {
 			generatedId = (Long) this.getSession().save(t);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return -1L;
-			
+
 		}
 		return (Long) generatedId;
 	}
@@ -96,45 +114,33 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	@Override
 	public List<T> list(String criteria) {
 		// TODO Auto-generated method stub
-/*		StringBuilder sql = new StringBuilder();
-		sql.append("from ");
-//		sql.append(this.clazz);
-		try { 
-			if (!criteria.isEmpty()) {
-				sql.append(" where ");
-				sql.append(criteria);
-			}
-		}catch (NullPointerException e) {
-			return new ArrayList<T>();
-		}*/
-		
+		/*
+		 * StringBuilder sql = new StringBuilder(); sql.append("from "); //
+		 * sql.append(this.clazz); try { if (!criteria.isEmpty()) {
+		 * sql.append(" where "); sql.append(criteria); } }catch (NullPointerException
+		 * e) { return new ArrayList<T>(); }
+		 */
+
 		return getSession().createCriteria(clazz.getName()).list();
 	}
 
-	
-	
 	@Override
-	public String listAsJson(String criteria) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public String listAsJson(String criteria) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
 		// TODO Auto-generated method stub
-/*		StringBuilder sql = new StringBuilder();
-		sql.append("from ");
-//		sql.append(this.clazz);
-		try { 
-			if (!criteria.isEmpty()) {
-				sql.append(" where ");
-				sql.append(criteria);
-			}
-		}catch (NullPointerException e) {
-			return new ArrayList<T>();
-		}*/
-		
+		/*
+		 * StringBuilder sql = new StringBuilder(); sql.append("from "); //
+		 * sql.append(this.clazz); try { if (!criteria.isEmpty()) {
+		 * sql.append(" where "); sql.append(criteria); } }catch (NullPointerException
+		 * e) { return new ArrayList<T>(); }
+		 */
+
 		List<T> list = this.list(criteria);
-		
-		
+
 		return this.listToJson(list);
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public T getById(Long id) {
@@ -143,24 +149,23 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	}
 
 	@Override
-	public String listToJson(List<T> listByName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public String listToJson(List<T> listByName) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
 
-		
 		StringBuilder json = new StringBuilder();
 		json.append("{ ");
 		Long i = 0L;
 		for (T t : listByName) {
-			System.out.println("valor json:"+clazz.getMethod("toJson", null).invoke(t, null));
-			
-			json.append("\""+ i.toString() + "\":");
-			json.append(clazz.getMethod("toJson", null).invoke(t, null));	
+			System.out.println("valor json:" + clazz.getMethod("toJson", null).invoke(t, null));
+
+			json.append("\"" + i.toString() + "\":");
+			json.append(clazz.getMethod("toJson", null).invoke(t, null));
 			json.append(',');
 			i++;
 		}
-		json.replace(json.length()-1, json.length(), "");
+		json.replace(json.length() - 1, json.length(), "");
 		json.append("}");
 		return json.toString();
 	}
-
 
 }

@@ -1,6 +1,6 @@
+
 /**
- *     This Class is an implementation of IJobDAO. In this example is used decorator design pattern 
- *     permitting a restructure of DAO for a specific model         
+ *     Class responsible for Business rules from Client domain  
  *     Copyright (C) 2018 Leandro Lima
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -16,14 +16,12 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.leoguilbor.DAO;
 
-import org.springframework.stereotype.Repository;
+package com.leoguilbor.business;
 
-import com.leoguilbor.generic.GenericDAOImpl;
-import com.leoguilbor.model.Job;
+import com.leoguilbor.generic.GenericBusinessImpl;
+import com.leoguilbor.model.Client;
 
-@Repository
-public class JobDAO extends GenericDAOImpl<Job>{
-
+public class ClientBusiness extends GenericBusinessImpl<Client>{
+	
 }
